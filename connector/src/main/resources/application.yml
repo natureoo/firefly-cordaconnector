@@ -1,0 +1,32 @@
+######################### Local corda node #######################
+#GLCM
+rpc:
+  host: "localhost:10006"
+  username: "user1"
+  password: "test"
+#PAYER
+#rpc:
+#  host: "localhost:10009"
+#  username: "user1"
+#  password: "test"
+
+########################## Kaleido corda node #######################
+#GLCM
+#rpc:
+#  host: "localhost:40031"
+#  username: "user1"
+#  password: "1q2w3e4R_"
+#PAYER
+#rpc:
+#  host: "localhost:40041"
+#  username: "user1"
+#  password: "1q2w3e4R_"
+
+db:
+  driverClassName: "org.h2.Driver"
+  url: "jdbc:h2:mem:test;TRACE_LEVEL_SYSTEM_OUT=2"
+  username: "test"
+  password: "test"
+spring:
+    jpa.generate-ddl: true
+

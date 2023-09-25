@@ -1,0 +1,13 @@
+/.idea/
+/.gradle/
+/bin/
+build/
+logs/
+jar/
+nodes/
+backup/
+connector/build
+cordapp/firefly-contracts/build
+cordapp/firefly-flows/build
+.vscode/launch.json
+*.code-workspace

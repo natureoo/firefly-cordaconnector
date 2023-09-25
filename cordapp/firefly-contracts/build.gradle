@@ -1,0 +1,77 @@
+plugins {
+    // Apply the java-library plugin to add support for Java Library
+    id 'java-library'
+    id 'net.corda.plugins.cordapp' version '5.0.8'
+    id "com.github.johnrengelman.shadow" version "5.2.0"
+//    id 'org.jetbrains.kotlin.jvm'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    google()
+//    jcenter()
+////    maven {
+////        url 'https://software.r3.com/artifactory/corda-dependencies'
+////    }
+//    maven { url 'https://software.r3.com/artifactory/corda/' }
+//    maven { url 'https://jitpack.io' }
+//    maven { url 'https://repo.gradle.org/gradle/libs-releases' }
+}
+
+// Corda serialization requires function parameter names to be included in the class file
+compileJava {
+    options.compilerArgs << '-parameters'
+}
+
+configurations {
+    quasar
+}
+
+tasks.withType(JavaExec)
+{
+    jvmArgs "-javaagent:${configurations.quasar.iterator().next()}"
+}
+
+dependencies {
+//    compile 'co.paralleluniverse:quasar-core:0.7.10'
+//    quasar 'co.paralleluniverse:quasar-core:0.7.10'
+    // these dependencies will NOT be included in the contract jar
+    cordaCompile ('net.corda:corda-core:4.4') {
+        exclude group: 'co.paralleluniverse'
+        exclude module: 'quasar-core'
+    }
+    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
+    implementation 'com.google.guava:guava:26.0-jre'
+
+    implementation(files("/Users/chenjian/Documents/chenj/work/workplace/study/blockchain/kaleido/firefly-cordaconnect/lib/quasar.jar"))
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+}
+
+cordapp {
+    targetPlatformVersion 4
+    minimumPlatformVersion 4
+    contract {
+        name "Firefly Contracts"
+        vendor "Kaleido Open Source"
+        licence "Apache License, Version 2.0"
+        versionId 1
+    }
+}
+//compileKotlin {
+//    kotlinOptions {
+//        jvmTarget = "11"
+//    }
+//}
+//compileTestKotlin {
+//    kotlinOptions {
+//        jvmTarget = "11"
+//    }
+//}
+
