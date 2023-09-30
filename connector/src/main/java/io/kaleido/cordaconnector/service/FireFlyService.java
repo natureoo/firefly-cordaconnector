@@ -141,6 +141,14 @@ public class FireFlyService {
         return signedTransaction.getId().toString();
     }
 
+    public String paymentAcceptenceBesu(PaymentAcceptenceBesuData paymentAcceptenceBesuData) throws CordaConnectionException, ExecutionException, InterruptedException {
+//        UUID groupId = UUID.fromString(paymentAcceptenceData.getGroupId());
+        UniqueIdentifier identifier = UniqueIdentifier.Companion.fromString(paymentAcceptenceBesuData.getKey());
+        Instant settlementDate = Instant.now();
+        SignedTransaction signedTransaction = rpcClient.getRpcProxy().startTrackedFlowDynamic(PaymentAcceptFlow.PaymentAcceptance.class,  identifier, paymentAcceptenceBesuData.getSettlementBankRef(), settlementDate).getReturnValue().get();
+        return signedTransaction.getId().toString();
+    }
+
     public String loadRequest(CashMovementRequestData cashMovementRequestData) throws CordaConnectionException, ExecutionException, InterruptedException {
 //        Set<Party> uniqueParticipants = validateAndGetParticipants(paymentRequestData.getObservers());
         Party me = rpcClient.getRpcProxy().nodeInfo().getLegalIdentities().get(0);
@@ -164,10 +172,19 @@ public class FireFlyService {
         return signedTransaction.getId().toString();
     }
 
+
     public String loadAcceptence(CashMovementAcceptenceData cashMovementAcceptenceData) throws CordaConnectionException, ExecutionException, InterruptedException {
         UniqueIdentifier identifier = UniqueIdentifier.Companion.fromString(cashMovementAcceptenceData.getLinearId());
         Instant settlementDate = Instant.parse(cashMovementAcceptenceData.getSettlementDate());
         SignedTransaction signedTransaction = rpcClient.getRpcProxy().startTrackedFlowDynamic(LoadAcceptFlow.LoadAcceptance.class,  identifier, cashMovementAcceptenceData.getSettlementBankRef(), settlementDate).getReturnValue().get();
+        return signedTransaction.getId().toString();
+    }
+
+
+    public String loadAcceptenceBesu(LoadAcceptenceDataBesu loadAcceptenceDataBesu) throws CordaConnectionException, ExecutionException, InterruptedException {
+        UniqueIdentifier identifier = UniqueIdentifier.Companion.fromString(loadAcceptenceDataBesu.getTxId());
+        Instant settlementDate = Instant.now();
+        SignedTransaction signedTransaction = rpcClient.getRpcProxy().startTrackedFlowDynamic(LoadAcceptFlow.LoadAcceptance.class,  identifier, loadAcceptenceDataBesu.getSettlementBankRef(), settlementDate).getReturnValue().get();
         return signedTransaction.getId().toString();
     }
 
@@ -229,6 +246,13 @@ public class FireFlyService {
         UniqueIdentifier identifier = UniqueIdentifier.Companion.fromString(cashMovementAcceptenceData.getLinearId());
         Instant settlementDate = Instant.parse(cashMovementAcceptenceData.getSettlementDate());
         SignedTransaction signedTransaction = rpcClient.getRpcProxy().startTrackedFlowDynamic(UnloadAcceptFlow.UnloadAcceptance.class,  identifier, cashMovementAcceptenceData.getSettlementBankRef(), settlementDate).getReturnValue().get();
+        return signedTransaction.getId().toString();
+    }
+
+    public String unloadAcceptenceBesu(UnloadAcceptenceDataBesu unloadAcceptenceDataBesu) throws CordaConnectionException, ExecutionException, InterruptedException {
+        UniqueIdentifier identifier = UniqueIdentifier.Companion.fromString(unloadAcceptenceDataBesu.getTxId());
+        Instant settlementDate = Instant.now();
+        SignedTransaction signedTransaction = rpcClient.getRpcProxy().startTrackedFlowDynamic(UnloadAcceptFlow.UnloadAcceptance.class,  identifier, unloadAcceptenceDataBesu.getSettlementBankRef(), settlementDate).getReturnValue().get();
         return signedTransaction.getId().toString();
     }
 

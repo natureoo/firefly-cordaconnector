@@ -51,10 +51,17 @@ public class FireFlyController {
         return new ConnectorResponse(txHash);
     }
 
-    @PostMapping("/paymentAcceptence")
-    public ConnectorResponse<String> paymentAcceptence(@RequestBody ConnectorRequest<PaymentAcceptenceData> request) throws CordaConnectionException, InterruptedException, ExecutionException {
-        String txHash = fireFlyService.paymentAcceptence(request.getData());
-        logger.info("Request({}), broadcastBatch (batchID:{}, groupID:{}, payloadRef:{}) creation transaction {} was successful.", request.getId(),   txHash);
+//    @PostMapping("/paymentAcceptence")
+//    public ConnectorResponse<String> paymentAcceptence(@RequestBody ConnectorRequest<PaymentAcceptenceData> request) throws CordaConnectionException, InterruptedException, ExecutionException {
+//        String txHash = fireFlyService.paymentAcceptence(request.getData());
+//        logger.info("Request({}), broadcastBatch (batchID:{}, groupID:{}, payloadRef:{}) creation transaction {} was successful.", request.getId(),   txHash);
+//        return new ConnectorResponse(txHash);
+//    }
+
+    @PostMapping("/paymentComplete")
+    public ConnectorResponse<String> paymentAcceptenceBesu(@RequestBody PaymentAcceptenceBesuData request) throws CordaConnectionException, InterruptedException, ExecutionException {
+        String txHash = fireFlyService.paymentAcceptenceBesu(request);
+        logger.info("Request({}), broadcastBatch (batchID:{}, groupID:{}, payloadRef:{}) creation transaction {} was successful.",   txHash);
         return new ConnectorResponse(txHash);
     }
 
@@ -65,10 +72,17 @@ public class FireFlyController {
         return new ConnectorResponse(txHash);
     }
 
-    @PostMapping("/loadAcceptence")
-    public ConnectorResponse<String> loadAcceptence(@RequestBody ConnectorRequest<CashMovementAcceptenceData> request) throws CordaConnectionException, InterruptedException, ExecutionException {
-        String txHash = fireFlyService.loadAcceptence(request.getData());
-        logger.info("Request({}), broadcastBatch (batchID:{}, groupID:{}, payloadRef:{}) creation transaction {} was successful.", request.getId(),  txHash);
+//    @PostMapping("/loadAcceptence")
+//    public ConnectorResponse<String> loadAcceptence(@RequestBody ConnectorRequest<CashMovementAcceptenceData> request) throws CordaConnectionException, InterruptedException, ExecutionException {
+//        String txHash = fireFlyService.loadAcceptence(request.getData());
+//        logger.info("Request({}), broadcastBatch (batchID:{}, groupID:{}, payloadRef:{}) creation transaction {} was successful.", request.getId(),  txHash);
+//        return new ConnectorResponse(txHash);
+//    }
+
+    @PostMapping("/loadCompleted")
+    public ConnectorResponse<String> loadAcceptenceBesu(@RequestBody LoadAcceptenceDataBesu request) throws CordaConnectionException, InterruptedException, ExecutionException {
+        String txHash = fireFlyService.loadAcceptenceBesu(request);
+        logger.info("Request({}), broadcastBatch (batchID:{}, groupID:{}, payloadRef:{}) creation transaction {} was successful.",  txHash);
         return new ConnectorResponse(txHash);
     }
 
@@ -93,10 +107,17 @@ public class FireFlyController {
         return new ConnectorResponse(txHash);
     }
 
-    @PostMapping("/unloadAcceptence")
-    public ConnectorResponse<String> unloadAcceptence(@RequestBody ConnectorRequest<CashMovementAcceptenceData> request) throws CordaConnectionException, InterruptedException, ExecutionException {
-        String txHash = fireFlyService.unloadAcceptence(request.getData());
-        logger.info("Request({}), broadcastBatch (batchID:{}, groupID:{}, payloadRef:{}) creation transaction {} was successful.", request.getId(),  txHash);
+//    @PostMapping("/unloadAcceptence")
+//    public ConnectorResponse<String> unloadAcceptence(@RequestBody ConnectorRequest<CashMovementAcceptenceData> request) throws CordaConnectionException, InterruptedException, ExecutionException {
+//        String txHash = fireFlyService.unloadAcceptence(request.getData());
+//        logger.info("Request({}), broadcastBatch (batchID:{}, groupID:{}, payloadRef:{}) creation transaction {} was successful.", request.getId(),  txHash);
+//        return new ConnectorResponse(txHash);
+//    }
+
+    @PostMapping("/unloadCompleted")
+    public ConnectorResponse<String> unloadAcceptenceBesu(@RequestBody UnloadAcceptenceDataBesu unloadAcceptenceDataBesu) throws CordaConnectionException, InterruptedException, ExecutionException {
+        String txHash = fireFlyService.unloadAcceptenceBesu(unloadAcceptenceDataBesu);
+        logger.info("Request({}), broadcastBatch (batchID:{}, groupID:{}, payloadRef:{}) creation transaction {} was successful.",   txHash);
         return new ConnectorResponse(txHash);
     }
 }
